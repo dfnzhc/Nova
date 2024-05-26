@@ -9,6 +9,9 @@ find_package(benchmark CONFIG REQUIRED)
 
 set(TEST_SOURCES
         Base/BaseTest.cpp
+        
+        Utils/LoggerTest.cpp
+        Utils/TerminalTest.cpp
 )
 
 set(${CMAKE_CURRENT_BINARY_DIR})

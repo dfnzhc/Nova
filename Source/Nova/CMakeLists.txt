@@ -10,6 +10,12 @@ endif ()
 set(BASE_FILES
         Base/Base.hpp
         Base/Base.cpp
+        Base/Defines.hpp
+)
+
+set(UTILS_FILES
+        Utils/Logger.hpp Utils/Logger.cpp
+        Utils/Terminal.hpp
 )
 
 source_group("Base" FILES ${BASE_FILES})
@@ -21,6 +27,7 @@ target_sources(${PROJECT_NAME}
         PRIVATE
         ${PROJECT_NAME}.hpp
         ${BASE_FILES}
+        ${UTILS_FILES}
 )
 
 target_compile_features(${PROJECT_NAME}
