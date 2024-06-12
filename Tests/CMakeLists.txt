@@ -7,14 +7,15 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 find_package(GTest CONFIG REQUIRED)
 find_package(benchmark CONFIG REQUIRED)
 
+set(${CMAKE_CURRENT_BINARY_DIR})
+
 set(TEST_SOURCES
         Base/BaseTest.cpp
-        
+
+        Utils/ThirdPartyTest.cpp
         Utils/LoggerTest.cpp
         Utils/TerminalTest.cpp
 )
-
-set(${CMAKE_CURRENT_BINARY_DIR})
 
 foreach (FILE ${TEST_SOURCES})
     get_filename_component(FILE_NAME ${FILE} NAME_WE)

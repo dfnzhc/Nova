@@ -14,8 +14,11 @@ set(BASE_FILES
 )
 
 set(UTILS_FILES
+        Utils/Assert.hpp
         Utils/Logger.hpp Utils/Logger.cpp
+        Utils/TaskFlow.hpp
         Utils/Terminal.hpp
+        Utils/Profiler.hpp
 )
 
 source_group("Base" FILES ${BASE_FILES})
@@ -35,10 +38,18 @@ target_compile_features(${PROJECT_NAME}
         PRIVATE cxx_std_20
 )
 
-#target_link_libraries(${PROJECT_NAME}
-#        #    PRIVATE
+find_package(libassert REQUIRED CONFIG)
+find_package(Taskflow CONFIG REQUIRED)
+
+#target_include_directories(${PROJECT_NAME}
 #        PUBLIC
 #)
+
+target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+        libassert::assert
+        Taskflow::Taskflow
+)
 
 target_compile_definitions(${PROJECT_NAME}
         PUBLIC
@@ -60,6 +71,7 @@ target_compile_definitions(${PROJECT_NAME}
         PRIVATE
         $<$<CONFIG:Debug>:_ITERATOR_DEBUG_LEVEL=0>
         ${PROJECT_NAME_UPPERCASE}_DLL
+        LIBASSERT_STATIC_DEFINE
 )
 
 target_compile_options(${PROJECT_NAME}

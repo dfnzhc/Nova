@@ -75,6 +75,10 @@ set_target_properties(copy_data_folder PROPERTIES FOLDER "Misc")
 # --------------------------------------------------------------
 # Includes
 # --------------------------------------------------------------
+######################################
+# Third party libraries
+include(cmake/CPM.cmake)
+add_subdirectory(ThirdParty)
 
 ######################################
 # Nova
