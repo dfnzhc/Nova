@@ -82,14 +82,14 @@ void Logger::unsubscribe(std::string_view name)
     _subscribers.extract(name);
 }
 
-void nova::logError(std::string_view msg, std::source_location sl)
+void nova::LogError(std::string_view msg, std::source_location sl)
 {
     Logger::inst().log(
         Logger::Level::Error,
         std::format("{}: '{}' {}({}:{})", msg, sl.function_name(), sl.file_name(), sl.line(), sl.column()));
 }
 
-void nova::logFatal(std::string_view msg, std::source_location sl)
+void nova::LogFatal(std::string_view msg, std::source_location sl)
 {
     Logger::inst().log(
         Logger::Level::Fatal,

@@ -44,7 +44,7 @@ AllowShortEnumsOnASingleLine: true
 AllowShortBlocksOnASingleLine: Always
 AllowShortCaseLabelsOnASingleLine: true
 #AllowShortCompoundRequirementOnASingleLine: true
-AllowShortFunctionsOnASingleLine: All
+AllowShortFunctionsOnASingleLine: InlineOnly
 AllowShortLambdasOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
@@ -73,7 +73,7 @@ BraceWrapping:
   BeforeLambdaBody: false
   BeforeWhile: false
   IndentBraces: false
-  SplitEmptyFunction: false
+  SplitEmptyFunction: true
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 BracedInitializerIndentWidth: 2
@@ -167,7 +167,7 @@ RemoveParentheses: Leave
 RemoveSemicolon: false
 RequiresClausePosition: OwnLine
 ShortNamespaceLines: 0
-SeparateDefinitionBlocks: Leave
+SeparateDefinitionBlocks: Always
 SortIncludes: Never
 SortUsingDeclarations: false
 SpaceAfterCStyleCast: false

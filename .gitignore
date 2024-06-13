@@ -372,3 +372,4 @@ MigrationBackup/
 /cmake-build-release/
 /cmake-build-debug-clang-cl/
 /cmake-build-relwithdebinfo/
+/ThirdParty/Bee/

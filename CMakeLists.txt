@@ -14,7 +14,7 @@ string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
 
 # Set the C++ standard to C++20
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 # Specify that this standard is required
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -43,6 +43,8 @@ add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 set(${PROJECT_NAME_UPPERCASE}_PRECOMPILED_HEADERS ON CACHE BOOL "Use precompiled header")
 set(${PROJECT_NAME_UPPERCASE}_BUILD_TESTS ON CACHE BOOL "Build test programs")
+set(${PROJECT_NAME_UPPERCASE}_BUILD_SAMPLES ON CACHE BOOL "Build Sample programs")
+
 
 # Directory
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Source)
@@ -85,6 +87,10 @@ add_subdirectory(ThirdParty)
 add_subdirectory(Source/Nova)
 add_dependencies(Nova copy_data_folder)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+if (${PROJECT_NAME_UPPERCASE}_BUILD_SAMPLES)
+    add_subdirectory(Samples)
+endif ()
 
 ######################################
 # 测试

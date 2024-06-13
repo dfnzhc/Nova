@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @File LoggerTest.cpp
  * @Author dfnzhc (https://github.com/dfnzhc)
  * @Date 2024/5/26
@@ -17,15 +17,15 @@ TEST(UtilsTest, Logger)
     float b       = 2.f;
     std::string c = "3.0";
 
-    logInfo("Hello from info");
-    logInfo("Hello from info: {} {} {}", a, b, c);
+    LogInfo("Hello from info");
+    LogInfo("Hello from info: {} {} {}", a, b, c);
 
-    logWarn("Hello from warn");
-    logWarn("Hello from warn: {} {} {}", a, b, c);
+    LogWarn("Hello from warn");
+    LogWarn("Hello from warn: {} {} {}", a, b, c);
 
-    logE("Hello from error");
-    logE("Hello from error: {} {} {}", a, b, c);
+    LogE("Hello from error");
+    LogE("Hello from error: {} {} {}", a, b, c);
 
-    logE("Hello from fatal");
-    logF("Hello from fatal: {} {} {}", a, b, c);
+    LogE("Hello from fatal");
+    LogF("Hello from fatal: {} {} {}", a, b, c);
 }

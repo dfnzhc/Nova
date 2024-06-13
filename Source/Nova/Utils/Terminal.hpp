@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @File Terminal.hpp
  * @Author dfnzhc (https://github.com/dfnzhc)
  * @Date 2024/5/18

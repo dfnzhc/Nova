@@ -61,40 +61,35 @@ inline auto operator<=>(Logger::Level lhs, Logger::Level rhs)
 
 // @formatter:off
 
-inline void logInfo(std::string_view msg) { Logger::inst().log(Logger::Level::Info, msg); }
+inline void LogInfo(std::string_view msg) { Logger::inst().log(Logger::Level::Info, msg); }
 
-template<typename... Args> inline void logInfo(std::format_string<Args...> format, Args&&... args)
+template<typename... Args> inline void LogInfo(std::format_string<Args...> format, Args&&... args)
 {
     Logger::inst().log(Logger::Level::Info, std::format(format, std::forward<Args>(args)...));
 }
 
-inline void logWarn(std::string_view msg) { Logger::inst().log(Logger::Level::Warning, msg); }
+inline void LogWarn(std::string_view msg) { Logger::inst().log(Logger::Level::Warning, msg); }
 
-template<typename... Args> inline void logWarn(std::format_string<Args...> format, Args&&... args)
+template<typename... Args> inline void LogWarn(std::format_string<Args...> format, Args&&... args)
 {
     Logger::inst().log(Logger::Level::Warning, std::format(format, std::forward<Args>(args)...));
 }
 
-void NOVA_API logError(std::string_view msg, std::source_location sl = std::source_location::current());
+void NOVA_API LogError(std::string_view msg, std::source_location sl = std::source_location::current());
 
-void NOVA_API logFatal(std::string_view msg, std::source_location sl = std::source_location::current());
+void NOVA_API LogFatal(std::string_view msg, std::source_location sl = std::source_location::current());
 
-#define logE(fmt, ...)                                                                                                 \
+#define LogE(fmt, ...)                                                                                                 \
     do {                                                                                                               \
         auto loc = std::source_location::current();                                                                    \
-        logError(std::format(fmt, __VA_ARGS__), loc);                                                                  \
+        LogError(std::format(fmt, __VA_ARGS__), loc);                                                                  \
     } while (0)
 
-#define logF(fmt, ...)                                                                                                 \
+#define LogF(fmt, ...)                                                                                                 \
     do {                                                                                                               \
         auto loc = std::source_location::current();                                                                    \
-        logFatal(std::format(fmt, __VA_ARGS__), loc);                                                                  \
+        LogFatal(std::format(fmt, __VA_ARGS__), loc);                                                                  \
     } while (0)
 
 // @formatter:on
 } // namespace nova
-
-#define NOVA_PRINT(x)                                                                                                  \
-    do {                                                                                                               \
-        ::nova::logInfo("{} = {}", #x, x);                                                                             \
-    } while (0)
