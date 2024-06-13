@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @File Defines.hpp
  * @Author dfnzhc (https://github.com/dfnzhc)
  * @Date 2024/5/26
@@ -155,4 +155,15 @@ using FloatBits = u32;
 
 static_assert(sizeof(Float) == sizeof(FloatBits));
 
+} // namespace nova
+
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
+#include <bee/bee.hpp>
+#pragma clang diagnostic pop
+
+
+namespace nova {
+using namespace bee;
 } // namespace nova
