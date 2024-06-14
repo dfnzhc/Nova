@@ -15,6 +15,28 @@ set(BASE_FILES
         Base/Windows.hpp Base/Windows.cpp
 )
 
+file(GLOB_RECURSE VECTOR_FILES ./MATH/Vector/**.hpp)
+file(GLOB_RECURSE MATRIX_FILES ./MATH/Matrix/**.hpp)
+file(GLOB_RECURSE QUAT_FILES ./MATH/Quaternion/**.hpp)
+file(GLOB_RECURSE GEOMETRY_FILES ./MATH/Geometry/**.hpp)
+
+set(MATH_FILES
+        Math/Bit.hpp
+        Math/Check.hpp
+        Math/Common.hpp
+        Math/Constants.hpp
+        Math/Float.hpp
+        Math/Math.hpp
+        Math/Vector.hpp ${VECTOR_FILES}
+        Math/Matrix.hpp ${MATRIX_FILES}
+        Math/Quaternion.hpp ${QUAT_FILES}
+        Math/Geometry.hpp ${GEOMETRY_FILES}
+        Math/Transform.hpp
+        Math/Hash.hpp
+        Math/Random.hpp
+        Math/TypeHash.hpp
+)
+
 set(UTILS_FILES
         Utils/Assert.hpp
         Utils/Logger.hpp Utils/Logger.cpp
@@ -32,6 +54,7 @@ target_sources(${PROJECT_NAME}
         PRIVATE
         ${PROJECT_NAME}.hpp
         ${BASE_FILES}
+        ${MATH_FILES}
         ${UTILS_FILES}
 )
 
@@ -45,9 +68,10 @@ find_package(Taskflow CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Vulkan REQUIRED)
 
-#target_include_directories(${PROJECT_NAME}
-#        PUBLIC
-#)
+target_include_directories(${PROJECT_NAME}
+        PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
@@ -55,7 +79,6 @@ target_link_libraries(${PROJECT_NAME}
         Taskflow::Taskflow
         glfw
         Vulkan::Vulkan
-        bee::bee
 )
 
 target_compile_definitions(${PROJECT_NAME}

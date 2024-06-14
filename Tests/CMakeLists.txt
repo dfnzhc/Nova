@@ -11,6 +11,14 @@ set(${CMAKE_CURRENT_BINARY_DIR})
 
 set(TEST_SOURCES
         Base/BaseTest.cpp
+        
+        Math/BitTest.cpp
+        Math/CommonTest.cpp
+        Math/ConstantTest.cpp
+        Math/FloatTest.cpp
+        Math/VectorTest.cpp
+        Math/GeometryTest.cpp
+        Math/TransformTest.cpp
 
         Utils/ThirdPartyTest.cpp
         Utils/LoggerTest.cpp

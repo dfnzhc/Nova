@@ -13,7 +13,7 @@ project(Nova
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
 
-# Set the C++ standard to C++20
+# Set the C++ standard to C++23
 set(CMAKE_CXX_STANDARD 23)
 # Specify that this standard is required
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

@@ -108,7 +108,9 @@ constexpr auto kIsRelease = false;
 #  define CONST_STATIC_INIT(...) = __VA_ARGS__
 #endif
 
-#define NOVA_CPU_GPU NOVA_CPU NOVA_GPU
+#define NOVA_CPU_GPU   NOVA_CPU NOVA_GPU
+#define NOVA_FUNC      NOVA_INLINE
+#define NOVA_FUNC_DECL
 
 namespace nova {
 // -------------------------
@@ -155,15 +157,4 @@ using FloatBits = u32;
 
 static_assert(sizeof(Float) == sizeof(FloatBits));
 
-} // namespace nova
-
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
-#include <bee/bee.hpp>
-#pragma clang diagnostic pop
-
-
-namespace nova {
-using namespace bee;
 } // namespace nova
