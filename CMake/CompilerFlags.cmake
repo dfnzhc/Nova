@@ -59,6 +59,7 @@ function(set_compiler_flags project_name)
             -Wno-c++20-compat
             -Wno-unsafe-buffer-usage
             -Wno-cast-function-type-strict
+            -Wno-switch-enum
     )
 
     set(GCC_FLAGS

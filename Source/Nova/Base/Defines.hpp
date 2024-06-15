@@ -108,8 +108,8 @@ constexpr auto kIsRelease = false;
 #  define CONST_STATIC_INIT(...) = __VA_ARGS__
 #endif
 
-#define NOVA_CPU_GPU   NOVA_CPU NOVA_GPU
-#define NOVA_FUNC      NOVA_INLINE
+#define NOVA_CPU_GPU NOVA_CPU NOVA_GPU
+#define NOVA_FUNC    NOVA_INLINE
 #define NOVA_FUNC_DECL
 
 namespace nova {

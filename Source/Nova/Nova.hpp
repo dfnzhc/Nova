@@ -7,7 +7,13 @@
 
 #pragma once
 
+#include "./Utils/TaskFlow.hpp"
+#include "./Utils/Memory.hpp"
+
+#include "./Base/Application.hpp"
 #include "./Base/Defines.hpp"
+#include "./Base/Enums.hpp"
+#include "./Base/Inputs.hpp"
 #include "./Base/Object.hpp"
 #include "./Base/Windows.hpp"
 
@@ -24,5 +30,4 @@
 #include "./Utils/Assert.hpp"
 #include "./Utils/Logger.hpp"
 #include "./Utils/Profiler.hpp"
-#include "./Utils/TaskFlow.hpp"
 #include "./Utils/Terminal.hpp"

@@ -7,47 +7,13 @@ if (${PROJECT_NAME}_PRECOMPILED_HEADERS)
     target_precompile_headers(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}.hpp)
 endif ()
 
-set(BASE_FILES
-        Base/Base.hpp
-        Base/Base.cpp
-        Base/Defines.hpp
-        Base/Object.hpp Base/Object.cpp
-        Base/Windows.hpp Base/Windows.cpp
-)
 
-file(GLOB_RECURSE VECTOR_FILES ./MATH/Vector/**.hpp)
-file(GLOB_RECURSE MATRIX_FILES ./MATH/Matrix/**.hpp)
-file(GLOB_RECURSE QUAT_FILES ./MATH/Quaternion/**.hpp)
-file(GLOB_RECURSE GEOMETRY_FILES ./MATH/Geometry/**.hpp)
-
-set(MATH_FILES
-        Math/Bit.hpp
-        Math/Check.hpp
-        Math/Common.hpp
-        Math/Constants.hpp
-        Math/Float.hpp
-        Math/Math.hpp
-        Math/Vector.hpp ${VECTOR_FILES}
-        Math/Matrix.hpp ${MATRIX_FILES}
-        Math/Quaternion.hpp ${QUAT_FILES}
-        Math/Geometry.hpp ${GEOMETRY_FILES}
-        Math/Transform.hpp
-        Math/Hash.hpp
-        Math/Random.hpp
-        Math/TypeHash.hpp
-)
-
-set(UTILS_FILES
-        Utils/Assert.hpp
-        Utils/Logger.hpp Utils/Logger.cpp
-        Utils/TaskFlow.hpp
-        Utils/Terminal.hpp
-        Utils/Profiler.hpp
-)
+file(GLOB_RECURSE BASE_FILES ./Base/**.hpp ./Base/**.cpp)
+file(GLOB_RECURSE MATH_FILES ./Math/**.hpp)
+file(GLOB_RECURSE UTILS_FILES ./Utils/**.hpp ./Utils/**.cpp)
 
 source_group("Base" FILES ${BASE_FILES})
 source_group("Math" FILES ${MATH_FILES})
-source_group("Memory" FILES ${MEMORY_FILES})
 source_group("Utils" FILES ${UTILS_FILES})
 
 target_sources(${PROJECT_NAME}
@@ -98,6 +64,9 @@ target_compile_definitions(${PROJECT_NAME}
         $<$<CXX_COMPILER_ID:Clang>:_MSC_EXTENSIONS> # enable MS extensions
         # Custom
         ${PROJECT_NAME_UPPERCASE}_FORCE_USE_ANIS
+        $<$<CONFIG:Debug>:IMALLOC_SHOW_STATS=1>
+        $<$<CONFIG:Debug>:MIMALLOC_VERBOSE=1>
+        $<$<CONFIG:Debug>:MIMALLOC_SHOW_ERRORS=1>
         PRIVATE
         $<$<CONFIG:Debug>:_ITERATOR_DEBUG_LEVEL=0>
         ${PROJECT_NAME_UPPERCASE}_DLL
