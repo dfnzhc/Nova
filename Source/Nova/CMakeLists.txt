@@ -9,10 +9,12 @@ endif ()
 
 
 file(GLOB_RECURSE BASE_FILES ./Base/**.hpp ./Base/**.cpp)
+file(GLOB_RECURSE GRAPHICS_FILES ./Graphics/**.hpp ./Graphics/**.cpp)
 file(GLOB_RECURSE MATH_FILES ./Math/**.hpp)
 file(GLOB_RECURSE UTILS_FILES ./Utils/**.hpp ./Utils/**.cpp)
 
 source_group("Base" FILES ${BASE_FILES})
+source_group("Graphics" FILES ${GRAPHICS_FILES})
 source_group("Math" FILES ${MATH_FILES})
 source_group("Utils" FILES ${UTILS_FILES})
 
@@ -20,6 +22,7 @@ target_sources(${PROJECT_NAME}
         PRIVATE
         ${PROJECT_NAME}.hpp
         ${BASE_FILES}
+        ${GRAPHICS_FILES}
         ${MATH_FILES}
         ${UTILS_FILES}
 )
@@ -33,6 +36,7 @@ find_package(libassert CONFIG REQUIRED)
 find_package(Taskflow CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Vulkan REQUIRED)
+find_package(VulkanMemoryAllocator CONFIG REQUIRED)
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC
@@ -45,6 +49,7 @@ target_link_libraries(${PROJECT_NAME}
         Taskflow::Taskflow
         glfw
         Vulkan::Vulkan
+        GPUOpen::VulkanMemoryAllocator
 )
 
 target_compile_definitions(${PROJECT_NAME}
