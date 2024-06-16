@@ -48,7 +48,7 @@ void Logger::log(Level level, std::string_view msg)
         else if (level == Logger::Level::Fatal)
             os << tc::red << s;
 
-        os << tc::reset;
+        os << tc::reset << std::flush;
     }
 
     if (!_subscribers.empty()) {

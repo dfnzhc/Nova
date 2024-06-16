@@ -13,6 +13,7 @@
 #include "./Base/Application.hpp"
 #include "./Base/Defines.hpp"
 #include "./Base/Enums.hpp"
+#include "./Base/Error.hpp"
 #include "./Base/Inputs.hpp"
 #include "./Base/Object.hpp"
 #include "./Base/Windows.hpp"

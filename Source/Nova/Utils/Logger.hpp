@@ -83,10 +83,10 @@ template<typename... Args> inline void LogWarn(std::format_string<Args...> forma
 
 namespace detail {
 
-void LogWithSourceLocation(Logger::Level level, std::source_location sl, std::string_view msg);
+void NOVA_API LogWithSourceLocation(Logger::Level level, std::source_location sl, std::string_view msg);
 
 template<typename... Args>
-void LogWithSourceLocation(Logger::Level level,
+inline void LogWithSourceLocation(Logger::Level level,
                            std::source_location sl,
                            std::format_string<Args...> fmt,
                            Args&&... args)

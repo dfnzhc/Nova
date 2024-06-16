@@ -35,17 +35,18 @@ public:
     void onDroppedFile(const std::filesystem::path& path) override { Application::onDroppedFile(path); }
 };
 
-void test(const std::string& s)
-{
-    std::cout << s << std::endl;
-}
-
-int main()
+inline int RunApp()
 {
     AppConfig config;
     config.windowDesc.title           = "Framework";
     config.windowDesc.resizableWindow = true;
-
+    
     Framework project(config);
+    
     return project.run();
+}
+
+int main()
+{
+    return nova::CatchAndReportAllExceptions(RunApp);
 }

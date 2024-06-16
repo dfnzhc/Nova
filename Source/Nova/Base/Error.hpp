@@ -69,7 +69,7 @@ public:
     virtual ~AssertionError() override { }
 };
 
-[[noreturn]] NOVA_API void ThrowException(const std::source_location& loc, std::string_view msg)
+[[noreturn]] inline NOVA_API void ThrowException(const std::source_location& loc, std::string_view msg)
 {
     std::string fullMsg  = std::format("{}\n\n{}:{} ({})", msg, loc.file_name(), loc.line(), loc.function_name());
     fullMsg             += std::format(
@@ -99,7 +99,7 @@ ThrowException(const std::source_location& loc, std::format_string<Args...> fmt,
 namespace nova {
 
 template<typename CallbackT, typename ResultT = int>
-int CatchAndReportAllExceptions(CallbackT callback, ResultT errorResult = 1)
+inline int CatchAndReportAllExceptions(CallbackT callback, ResultT errorResult = 1)
 {
     ResultT result = errorResult;
     try {
