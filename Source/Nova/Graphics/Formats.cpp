@@ -9,7 +9,6 @@
 #include "./NativeFormats.hpp"
 
 namespace nova {
-
 const FormatDesc kFormatDesc[] = {
   // clang-format off
     // Format                           Name,           BytesPerBlock ChannelCount  Type          {bDepth,   bStencil, bCompressed},   {CompressionRatio.Width,     CompressionRatio.Height}    {numChannelBits.x, numChannelBits.y, numChannelBits.z, numChannelBits.w}
@@ -40,26 +39,26 @@ const FormatDesc kFormatDesc[] = {
     {Format::RGBA32Float,        "RGBA32Float",     16,             4,  FormatType::Float,      {false,  false, false,},        {1, 1},                                                  {32, 32, 32, 32}},
     {Format::R11G11B10Float,     "R11G11B10Float",  4,              3,  FormatType::Float,      {false,  false, false,},        {1, 1},                                                  {11, 11, 10, 0 }},
     {Format::RGB9E5Float,        "RGB9E5Float",     4,              3,  FormatType::Float,      {false,  false, false,},        {1, 1},                                                  {9, 9, 9, 5    }},
-    {Format::R8Int,              "R8Int",           1,              1,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {8, 0, 0, 0    }},
+    {Format::R8Int,              "R8Int",           1,              1,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {8, 0, 0, 0    }},
     {Format::R8Uint,             "R8Uint",          1,              1,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {8, 0, 0, 0    }},
-    {Format::R16Int,             "R16Int",          2,              1,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {16, 0, 0, 0   }},
+    {Format::R16Int,             "R16Int",          2,              1,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {16, 0, 0, 0   }},
     {Format::R16Uint,            "R16Uint",         2,              1,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {16, 0, 0, 0   }},
-    {Format::R32Int,             "R32Int",          4,              1,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {32, 0, 0, 0   }},
+    {Format::R32Int,             "R32Int",          4,              1,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {32, 0, 0, 0   }},
     {Format::R32Uint,            "R32Uint",         4,              1,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {32, 0, 0, 0   }},
-    {Format::RG8Int,             "RG8Int",          2,              2,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {8, 8, 0, 0    }},
+    {Format::RG8Int,             "RG8Int",          2,              2,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {8, 8, 0, 0    }},
     {Format::RG8Uint,            "RG8Uint",         2,              2,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {8, 8, 0, 0    }},
-    {Format::RG16Int,            "RG16Int",         4,              2,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {16, 16, 0, 0  }},
+    {Format::RG16Int,            "RG16Int",         4,              2,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {16, 16, 0, 0  }},
     {Format::RG16Uint,           "RG16Uint",        4,              2,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {16, 16, 0, 0  }},
-    {Format::RG32Int,            "RG32Int",         8,              2,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {32, 32, 0, 0  }},
+    {Format::RG32Int,            "RG32Int",         8,              2,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {32, 32, 0, 0  }},
     {Format::RG32Uint,           "RG32Uint",        8,              2,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {32, 32, 0, 0  }},
     // Format                           Name,           BytesPerBlock ChannelCount  Type          {bDepth,   bStencil, bCompressed},   {CompressionRatio.Width,     CompressionRatio.Height}
-    {Format::RGB32Int,           "RGB32Int",       12,              3,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {32, 32, 32, 0 }},
+    {Format::RGB32Int,           "RGB32Int",       12,              3,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {32, 32, 32, 0 }},
     {Format::RGB32Uint,          "RGB32Uint",      12,              3,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {32, 32, 32, 0 }},
-    {Format::RGBA8Int,           "RGBA8Int",        4,              4,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {8, 8, 8, 8    }},
+    {Format::RGBA8Int,           "RGBA8Int",        4,              4,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {8, 8, 8, 8    }},
     {Format::RGBA8Uint,          "RGBA8Uint",       4,              4,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {8, 8, 8, 8    }},
-    {Format::RGBA16Int,          "RGBA16Int",       8,              4,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {16, 16, 16, 16}},
+    {Format::RGBA16Int,          "RGBA16Int",       8,              4,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {16, 16, 16, 16}},
     {Format::RGBA16Uint,         "RGBA16Uint",      8,              4,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {16, 16, 16, 16}},
-    {Format::RGBA32Int,          "RGBA32Int",      16,              4,  FormatType::Sint,       {false,  false, false,},        {1, 1},                                                  {32, 32, 32, 32}},
+    {Format::RGBA32Int,          "RGBA32Int",      16,              4,  FormatType::Int,       {false,  false, false,},        {1, 1},                                                  {32, 32, 32, 32}},
     {Format::RGBA32Uint,         "RGBA32Uint",     16,              4,  FormatType::Uint,       {false,  false, false,},        {1, 1},                                                  {32, 32, 32, 32}},
     {Format::BGRA4Unorm,         "BGRA4Unorm",      2,              4,  FormatType::Unorm,      {false,  false, false,},        {1, 1},                                                  {4, 4, 4, 4    }},
     {Format::BGRA8Unorm,         "BGRA8Unorm",      4,              4,  FormatType::Unorm,      {false,  false, false,},        {1, 1},                                                  {8, 8, 8, 8    }},
@@ -176,7 +175,7 @@ static_assert(std::size(kNativeFormatDescs) == (size_t)Format::Count);
 
 DXGI_FORMAT GetDxgiFormat(Format format)
 {
-    ASSERT(kNativeFormatDescs[(uint32_t)format].falcorFormat == format);
+    NOVA_ASSERT(kNativeFormatDescs[(uint32_t)format].falcorFormat == format);
     return kNativeFormatDescs[(uint32_t)format].dxgiFormat;
 }
 
@@ -191,7 +190,7 @@ Format GetFormat(DXGI_FORMAT format)
 
 VkFormat NOVA_API GetVulkanFormat(Format format)
 {
-    ASSERT(kNativeFormatDescs[(uint32_t)format].falcorFormat == format);
+    NOVA_ASSERT(kNativeFormatDescs[(uint32_t)format].falcorFormat == format);
     return kNativeFormatDescs[(uint32_t)format].vkFormat;
 }
 

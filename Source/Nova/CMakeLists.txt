@@ -32,7 +32,6 @@ target_compile_features(${PROJECT_NAME}
         PRIVATE cxx_std_23
 )
 
-find_package(libassert CONFIG REQUIRED)
 find_package(Taskflow CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Vulkan REQUIRED)
@@ -45,7 +44,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
-        libassert::assert
         Taskflow::Taskflow
         glfw
         Vulkan::Vulkan

@@ -7,9 +7,9 @@
 
 #include <mutex>
 #include <set>
-#include "Object.hpp"
+#include "./Object.hpp"
+#include "./Error.hpp"
 #include "Nova/Utils/Logger.hpp"
-#include "Nova/Utils/Assert.hpp"
 
 using namespace nova;
 
@@ -32,9 +32,9 @@ void Object::incRef() const
 void Object::decRef(bool dealloc) const noexcept
 {
     auto refCount = _refCount.fetch_sub(1);
-    if (refCount <= 0) {
-        UNREACHABLE("对象引用数量不可小于零.");
-    }
+    if (refCount <= 0) [[unlikely]]
+        NOVA_UNREACHABLE();
+
     else if (refCount == 1) {
         {
             auto lock = std::lock_guard(sTrackedObjectsMutex);

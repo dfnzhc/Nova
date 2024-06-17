@@ -6,6 +6,7 @@
  */
 
 #include "./BlendState.hpp"
+#include "./Base/Error.hpp"
 
 using namespace nova;
 
@@ -28,7 +29,7 @@ BlendState::Desc& BlendState::Desc::setRtParams(uint32_t rtIndex,
                                                 BlendFunc srcAlphaFunc,
                                                 BlendFunc dstAlphaFunc)
 {
-    ASSERT(rtIndex < mRtDesc.size());
+    NOVA_ASSERT(rtIndex < mRtDesc.size());
 
     mRtDesc[rtIndex].rgbBlendOp   = rgbOp;
     mRtDesc[rtIndex].alphaBlendOp = alphaOp;
@@ -41,7 +42,7 @@ BlendState::Desc& BlendState::Desc::setRtParams(uint32_t rtIndex,
 
 BlendState::Desc& BlendState::Desc::setRenderTargetWriteMask(u32 rtIndex, ColorMask writeRgb)
 {
-    ASSERT(rtIndex < mRtDesc.size());
+    NOVA_ASSERT(rtIndex < mRtDesc.size());
 
     mRtDesc[rtIndex].writeMask = writeRgb;
     return *this;

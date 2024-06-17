@@ -7,7 +7,6 @@
 
 #include "Windows.hpp"
 #include "../Utils/Logger.hpp"
-#include "../Utils/Assert.hpp"
 #include "./Inputs.hpp"
 
 #define GLFW_EXPOSE_NATIVE_WIN32
@@ -250,7 +249,7 @@ private:
         case GLFW_RELEASE : event.type = KeyboardEvent::Type::KeyReleased; break;
         case GLFW_PRESS   : event.type = KeyboardEvent::Type::KeyPressed; break;
         case GLFW_REPEAT  : event.type = KeyboardEvent::Type::KeyRepeated; break;
-        default           : UNREACHABLE(); break;
+        default           : NOVA_UNREACHABLE();
         }
         event.key  = glfwToFalcorKey(key);
         event.mods = getModifierFlags(modifiers);
@@ -272,7 +271,7 @@ Window::Window(const Desc& desc, ICallbacks* pCallbacks)
     glfwSetErrorCallback(ApiCallbacks::errorCallback);
 
     if (sWindowCount.fetch_add(1) == 0) {
-        ASSERT(glfwInit() != GLFW_FALSE, "GLFW 初始化失败.");
+        NOVA_ASSERT(glfwInit() != GLFW_FALSE, "GLFW 初始化失败.");
     }
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -298,12 +297,12 @@ Window::Window(const Desc& desc, ICallbacks* pCallbacks)
 
     _pGLFWWindow = glfwCreateWindow(static_cast<i32>(w), static_cast<i32>(h), desc.title.data(), nullptr, nullptr);
 
-    ASSERT(_pGLFWWindow, "创建 GLFW 窗口失败.");
+    NOVA_ASSERT(_pGLFWWindow, "创建 GLFW 窗口失败.");
 
     glfwSetWindowPos(_pGLFWWindow, 5, 30);
 
     _apiHandle = glfwGetWin32Window(_pGLFWWindow);
-    ASSERT(_apiHandle, "无法获取 Native win32 handle.");
+    NOVA_ASSERT(_apiHandle, "无法获取 Native win32 handle.");
 
     _updateWindowSize();
 
@@ -345,7 +344,7 @@ void Window::_updateWindowSize()
 
 void Window::_setWindowSize(i32 width, i32 height)
 {
-    ASSERT(width > 0 && height > 0, "无效的窗口尺寸.");
+    NOVA_ASSERT(width > 0 && height > 0, "无效的窗口尺寸.");
 
     _desc.width   = cast_to<u32>(width);
     _desc.height  = cast_to<u32>(height);

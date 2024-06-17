@@ -8,7 +8,7 @@
 #pragma once
 
 #include "../Base/Enums.hpp"
-#include "../Utils/Assert.hpp"
+#include "../Base/Error.hpp"
 #include <span>
 #include <string>
 
@@ -137,7 +137,7 @@ enum class FormatType
     UnormSrgb, ///< 无符号标准化SRGB格式
     Snorm,     ///< 有符号标准化格式
     Uint,      ///< 无符号整数格式
-    Sint       ///< 有符号整数格式
+    Int        ///< 有符号整数格式
 };
 
 struct FormatDesc
@@ -168,25 +168,25 @@ extern const NOVA_API FormatDesc kFormatDesc[];
 
 inline u32 GetFormatBytesPerBlock(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].bytesPerBlock;
 }
 
 inline u32 GetFormatPixelsPerBlock(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].compressionRatio.width * kFormatDesc[(u32)format].compressionRatio.height;
 }
 
 inline bool isDepthFormat(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].isDepth;
 }
 
 inline bool isStencilFormat(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].isStencil;
 }
 
@@ -197,38 +197,38 @@ inline bool isDepthStencilFormat(Format format)
 
 inline bool isCompressedFormat(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].isCompressed;
 }
 
 inline u32 GetFormatWidthCompressionRatio(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].compressionRatio.width;
 }
 
 inline u32 GetFormatHeightCompressionRatio(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].compressionRatio.height;
 }
 
 inline u32 GetFormatChannelCount(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].channelCount;
 }
 
 inline FormatType GetFormatType(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].Type;
 }
 
 inline bool isIntegerFormat(Format format)
 {
     FormatType type = GetFormatType(format);
-    return type == FormatType::Uint || type == FormatType::Sint;
+    return type == FormatType::Uint || type == FormatType::Int;
 }
 
 inline u32 GetNumChannelBits(Format format, int channel)
@@ -266,7 +266,7 @@ inline TextureChannelFlags GetChannelMask(Format format)
 
 inline u32 GetFormatRowPitch(Format format, u32 width)
 {
-    ASSERT(width % GetFormatWidthCompressionRatio(format) == 0);
+    NOVA_ASSERT(width % GetFormatWidthCompressionRatio(format) == 0);
     return (width / GetFormatWidthCompressionRatio(format)) * GetFormatBytesPerBlock(format);
 }
 
@@ -285,7 +285,7 @@ inline Format SrgbToLinearFormat(Format format)
     case Format::BGRX8UnormSrgb : return Format::BGRX8Unorm;
     case Format::RGBA8UnormSrgb : return Format::RGBA8Unorm;
     case Format::BC7UnormSrgb   : return Format::BC7Unorm;
-    default                     : ASSERT(isSrgbFormat(format) == false); return format;
+    default                     : NOVA_ASSERT(isSrgbFormat(format) == false); return format;
     }
 }
 
@@ -308,7 +308,7 @@ inline Format DepthToColorFormat(Format format)
     switch (format) {
     case Format::D16Unorm : return Format::R16Unorm;
     case Format::D32Float : return Format::R32Float;
-    default               : ASSERT(isDepthFormat(format) == false); return format;
+    default               : NOVA_ASSERT(isDepthFormat(format) == false); return format;
     }
 }
 
@@ -327,7 +327,7 @@ inline bool doesFormatHaveAlpha(Format format)
 
 inline const std::string& toString(Format format)
 {
-    ASSERT(kFormatDesc[(u32)format].format == format);
+    NOVA_ASSERT(kFormatDesc[(u32)format].format == format);
     return kFormatDesc[(u32)format].name;
 }
 
@@ -342,10 +342,10 @@ inline std::string toString(FormatType Type)
         TypeToString(UnormSrgb);
         TypeToString(Snorm);
         TypeToString(Uint);
-        TypeToString(Sint);
+        TypeToString(Int);
     }
 #undef TypeToString
-    UNREACHABLE();
+    NOVA_UNREACHABLE();
 }
 
 inline std::string toString(BindFlags flags)

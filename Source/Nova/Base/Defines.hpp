@@ -56,6 +56,7 @@ constexpr auto kIsRelease = true;
 constexpr auto kIsDebug   = true;
 constexpr auto kIsRelease = false;
 #  define NOVA_DEBUG_BUILD
+#  define NOVA_ENABLE_ASSERTS
 #endif
 } // namespace nova
 

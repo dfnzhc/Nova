@@ -8,14 +8,13 @@
 #pragma once
 
 #include "./Math.hpp"
-#include "../Utils/Assert.hpp"
+#include "../Base/Error.hpp"
 
 namespace nova {
 
 #ifdef NOVA_DEBUG_BUILD
-#  include <cassert>
-#  define NOVA_CHECK_IMPL(x)      DEBUG_ASSERT(x)
-#  define NOVA_CHECK_OP(a, b, op) DEBUG_ASSERT((a)op(b))
+#  define NOVA_CHECK_IMPL(x)      NOVA_ASSERT(x)
+#  define NOVA_CHECK_OP(a, b, op) NOVA_ASSERT_OP(a, b, op)
 #else
 #  define NOVA_CHECK_IMPL(x)      /* ignore */
 #  define NOVA_CHECK_OP(a, b, op) /* ignore */

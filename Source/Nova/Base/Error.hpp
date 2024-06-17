@@ -14,6 +14,7 @@
 #include <string_view>
 #include <type_traits>
 #include <source_location>
+#include <stacktrace>
 #include "./Enums.hpp"
 #include "./Utils/Logger.hpp"
 
@@ -34,6 +35,8 @@ public:
     Exception(const Exception& other) noexcept : exception(other) { _pWhat = other._pWhat; }
 
     ~Exception() override = default;
+
+    Exception& operator=(const Exception&) = delete;
 
     const char* what() const noexcept override { return _pWhat ? _pWhat->c_str() : ""; }
 
@@ -60,23 +63,16 @@ public:
 class NOVA_API AssertionError : public Exception
 {
 public:
-    AssertionError() noexcept { }
+    AssertionError() noexcept = default;
 
-    AssertionError(std::string_view what) : Exception(what) { }
+    explicit AssertionError(std::string_view what) : Exception(what) { }
 
-    AssertionError(const AssertionError& other) noexcept { _pWhat = other._pWhat; }
+    AssertionError(const AssertionError& other) noexcept : Exception(other) { _pWhat = other._pWhat; }
 
-    virtual ~AssertionError() override { }
+    ~AssertionError() override = default;
 };
 
-[[noreturn]] inline NOVA_API void ThrowException(const std::source_location& loc, std::string_view msg)
-{
-    std::string fullMsg  = std::format("{}\n\n{}:{} ({})", msg, loc.file_name(), loc.line(), loc.function_name());
-    fullMsg             += std::format(
-        "\n\nStacktrace:\nFile{}({}{}) '{}'", loc.file_name(), loc.line(), loc.column(), loc.function_name());
-
-    throw RuntimeError(fullMsg);
-}
+[[noreturn]] NOVA_API void ThrowException(const std::source_location& loc, std::string_view msg);
 
 namespace internal {
 
@@ -94,7 +90,88 @@ ThrowException(const std::source_location& loc, std::format_string<Args...> fmt,
 } // namespace internal
 } // namespace nova
 
-#define NOVA_THROW(...) ::nova::internal::ThrowException(fstd::source_location::current(), __VA_ARGS__)
+#define NOVA_THROW(...) ::nova::internal::ThrowException(std::source_location::current(), __VA_ARGS__)
+
+#define NOVA_CONFIRM(cond, ...)                                                                                        \
+    do {                                                                                                               \
+        if (!(cond))                                                                                                   \
+            NOVA_THROW(__VA_ARGS__);                                                                                   \
+    } while (0)
+
+#define NOVA_UNIMPLEMENTED() NOVA_THROW("还未实现的部分")
+
+#define NOVA_UNREACHABLE() NOVA_THROW("You shall not PASS!!!")
+
+namespace nova {
+
+[[noreturn]] NOVA_API void
+ReportAssertion(const std::source_location& loc, std::string_view cond, std::string_view msg = {});
+
+namespace internal {
+
+[[noreturn]] inline void ReportAssertion(const std::source_location& loc, std::string_view cond)
+{
+    ::nova::ReportAssertion(loc, cond);
+}
+
+[[noreturn]] inline void ReportAssertion(const std::source_location& loc, std::string_view cond, std::string_view msg)
+{
+    ::nova::ReportAssertion(loc, cond, msg);
+}
+
+template<typename... Args>
+[[noreturn]] inline void
+ReportAssertion(const std::source_location& loc, std::string_view cond, std::format_string<Args...> fmt, Args&&... args)
+{
+    ::nova::ReportAssertion(loc, cond, std::format(fmt, std::forward<Args>(args)...));
+}
+} // namespace internal
+} // namespace nova
+
+#ifdef NOVA_ENABLE_ASSERTS
+
+#  define NOVA_ASSERT(cond, ...)                                                                                       \
+      do {                                                                                                             \
+          if (!(cond)) {                                                                                               \
+              ::nova::internal::ReportAssertion(std::source_location::current(), #cond, __VA_ARGS__);                \
+          }                                                                                                            \
+      } while (0)
+
+#  define NOVA_ASSERT_OP(a, b, OP)                                                                                     \
+      do {                                                                                                             \
+          if (!(a OP b)) {                                                                                             \
+              ::nova::internal::ReportAssertion(std::source_location::current(),                                       \
+                                                std::format("{} {} {} ({} {} {})", #a, #OP, #b, a, #OP, b));           \
+          }                                                                                                            \
+      } while (0)
+
+#  define NOVA_ASSERT_EQ(a, b) NOVA_ASSERT_OP(a, b, ==)
+#  define NOVA_ASSERT_NE(a, b) NOVA_ASSERT_OP(a, b, !=)
+#  define NOVA_ASSERT_GE(a, b) NOVA_ASSERT_OP(a, b, >=)
+#  define NOVA_ASSERT_GT(a, b) NOVA_ASSERT_OP(a, b, >)
+#  define NOVA_ASSERT_LE(a, b) NOVA_ASSERT_OP(a, b, <=)
+#  define NOVA_ASSERT_LT(a, b) NOVA_ASSERT_OP(a, b, <)
+
+#else // NOVA_ENABLE_ASSERTS
+
+#  define NOVA_ASSERT(cond, ...)                                                                                       \
+      do {                                                                                                             \
+          {                                                                                                            \
+          }                                                                                                            \
+      } while (0)
+#  define NOVA_ASSERT_OP(a, b, OP)                                                                                     \
+      do {                                                                                                             \
+          {                                                                                                            \
+          }                                                                                                            \
+      } while (0)
+#  define NOVA_ASSERT_EQ(a, b) NOVA_ASSERT_OP(a, b, ==)
+#  define NOVA_ASSERT_NE(a, b) NOVA_ASSERT_OP(a, b, !=)
+#  define NOVA_ASSERT_GE(a, b) NOVA_ASSERT_OP(a, b, >=)
+#  define NOVA_ASSERT_GT(a, b) NOVA_ASSERT_OP(a, b, >)
+#  define NOVA_ASSERT_LE(a, b) NOVA_ASSERT_OP(a, b, <=)
+#  define NOVA_ASSERT_LT(a, b) NOVA_ASSERT_OP(a, b, <)
+
+#endif // NOVA_ENABLE_ASSERTS
 
 namespace nova {
 
@@ -104,10 +181,12 @@ inline int CatchAndReportAllExceptions(CallbackT callback, ResultT errorResult =
     ResultT result = errorResult;
     try {
         result = callback();
+    } catch (const AssertionError& e) {
+        LogError(std::string("断言错误:\n\n") + e.what());
     } catch (const std::exception& e) {
-        LogError(std::string("发生异常:\n\n") + e.what());
+        LogFatal(std::string("发生异常:\n\n") + e.what());
     } catch (...) {
-        LogError("未知异常发生");
+        LogFatal("未知异常发生");
     }
     return result;
 }

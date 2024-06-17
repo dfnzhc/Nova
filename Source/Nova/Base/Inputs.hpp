@@ -270,7 +270,7 @@ private:
             return states[cast_to<size_t>(Key::LeftControl)] || states[cast_to<size_t>(Key::RightControl)];
         case Modifier::Alt : return states[cast_to<size_t>(Key::LeftAlt)] || states[cast_to<size_t>(Key::RightAlt)];
         }
-        UNREACHABLE();
+        NOVA_UNREACHABLE();
     }
 
     KeyStates _currentKeyState;

@@ -91,7 +91,7 @@ void Application::handleWindowSizeChange()
     /// 处理窗口尺寸改变逻辑
     // TODO：交换链、帧缓冲
 
-    ASSERT(_pWindow);
+    NOVA_ASSERT(_pWindow);
 
     // Tell the device to resize the swap chain
     auto newSize    = _pWindow->getClientAreaSize();

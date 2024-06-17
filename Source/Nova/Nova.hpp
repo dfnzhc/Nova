@@ -28,7 +28,6 @@
 #include "./Math/Geometry.hpp"
 #include "./Math/Transform.hpp"
 
-#include "./Utils/Assert.hpp"
 #include "./Utils/Logger.hpp"
 #include "./Utils/Profiler.hpp"
 #include "./Utils/Terminal.hpp"

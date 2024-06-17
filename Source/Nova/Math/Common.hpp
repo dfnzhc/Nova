@@ -11,6 +11,7 @@
 #include "./Check.hpp"
 #include "./Constants.hpp"
 
+#include <bit>
 #include <cstring>
 
 namespace nova {
